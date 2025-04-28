@@ -35,7 +35,7 @@ services:
     networks:
       - proxy-frontend
     environment:
-      - DEFAULT_EMAIL=marcos.donato@fatec.sp.gov.br
+      - DEFAULT_EMAIL=seu_email@dominio
 #      - NGINX_PROXY_CONTAINER=nginx-proxy 
     restart: unless-stopped
 
