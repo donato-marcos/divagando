@@ -35,7 +35,7 @@ services:
       - VIRTUAL_HOST=wordpress.${DOMAIN}
       - LETSENCRYPT_HOST=wordpress.${DOMAIN}
 #      - VIRTUAL_PORT=443
-      - LETSENCRYPT_EMAIL=marcos.donato@fatec.sp.gov.br
+      - LETSENCRYPT_EMAIL=seu_email@dominio
 #      - HTTPS_METHOD=noredirect
       - WORDPRESS_DB_HOST=wordpress-db:3306
       - WORDPRESS_DB_USER=wordpress
