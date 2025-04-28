@@ -39,7 +39,7 @@ services:
       POSTGRES_USER: 'npm'
       POSTGRES_PASSWORD: 'npmpass'
       POSTGRES_DB: 'npm'
-      #INITIAL_ADMIN_EMAIL: marcos.donato@fatec.sp.gov.br
+      #INITIAL_ADMIN_EMAIL: seu_email@dominio
       #INITIAL_ADMIN_PASSWORD: @lunoFat3c
     volumes:
       - postgres:/var/lib/postgresql/data
