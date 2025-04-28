@@ -22,7 +22,7 @@ services:
       DB_POSTGRES_NAME: 'npm'
       # Uncomment this if IPv6 is not enabled on your host
       # DISABLE_IPV6: 'true'
-      #INITIAL_ADMIN_EMAIL: marcos.donato@fatec.sp.gov.br
+      #INITIAL_ADMIN_EMAIL: seu_email@dominio
       #INITIAL_ADMIN_PASSWORD: @lunoFat3c
     volumes:
       - npm_data:/data
