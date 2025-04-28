@@ -1,0 +1,59 @@
+---
+name: reverse-proxy
+
+services:
+  nginx-proxy:
+    image: nginxproxy/nginx-proxy:alpine
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - /var/run/docker.sock:/tmp/docker.sock:ro
+      - nginx_certs:/etc/nginx/certs:ro
+      - nginx_vhost:/etc/nginx/vhost.d
+      - nginx_conf:/etc/nginx/conf.d
+      - nginx_html:/usr/share/nginx/html
+    networks:
+      - proxy-frontend
+    restart: unless-stopped
+#    labels:
+#      - "com.github.nginx-proxy.nginx-proxy"
+
+  letsencrypt:
+    image: nginxproxy/acme-companion
+    depends_on:
+      - nginx-proxy
+    volumes_from:
+      - nginx-proxy
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - nginx_certs:/etc/nginx/certs:rw
+      - nginx_vhost:/etc/nginx/vhost.d
+      - nginx_conf:/etc/nginx/conf.d
+      - nginx_html:/usr/share/nginx/html
+      - acme:/etc/acme.sh
+    networks:
+      - proxy-frontend
+    environment:
+      - DEFAULT_EMAIL=marcos.donato@fatec.sp.gov.br
+#      - NGINX_PROXY_CONTAINER=nginx-proxy 
+    restart: unless-stopped
+
+volumes:
+  nginx_certs:
+    name: nginx_certs
+  nginx_vhost:
+    name: nginx_vhost
+  nginx_conf:
+  nginx_html:
+    name: nginx_html
+  acme:
+    name: acme
+
+networks:
+  proxy-frontend:
+    name: proxy-frontend
+    driver: bridge
+    attachable: true
+
+

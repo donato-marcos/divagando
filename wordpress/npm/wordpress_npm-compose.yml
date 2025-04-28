@@ -1,0 +1,52 @@
+---
+name: wordpress
+services:
+  wordpress-db:
+    image: mysql:8.0
+    volumes:
+      - wordpress_db_data:/var/lib/mysql
+    networks:
+      - wordpress-backend
+    environment:
+      - MYSQL_ROOT_PASSWORD=@lunoFat3c
+      - MYSQL_DATABASE=wordpress
+      - MYSQL_USER=wordpress
+      - MYSQL_PASSWORD=alunofatec
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "--password=@lunoFat3c"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 30s
+    restart: always
+
+  wordpress:
+    image: wordpress
+    depends_on:
+      wordpress-db:
+        condition: service_healthy
+    volumes:
+      - wordpress_data:/var/www/html
+    networks:
+      - proxy-frontend
+      - wordpress-backend
+    environment:
+      - WORDPRESS_DB_HOST=wordpress-db:3306
+      - WORDPRESS_DB_USER=wordpress
+      - WORDPRESS_DB_PASSWORD=alunofatec
+    restart: always
+
+volumes:
+  wordpress_db_data:
+    name: wordpress_db_data
+  wordpress_data:
+    name: wordpress_data
+
+networks:
+  proxy-frontend:
+    external: true
+  wordpress-backend:
+    name: wordpress-backend
+    driver: bridge
+
+
