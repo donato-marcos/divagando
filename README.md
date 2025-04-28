@@ -1,4 +1,4 @@
-# **Apenas divagando um pouco e brincando docker para aprender.**
+# **Apenas divagando um pouco e brincando com docker para aprender.**
 
 Serviços Wordpress com nginx-proxy: [link](wordpress/nginx-proxy)
 
