@@ -35,6 +35,7 @@ DOMAIN=seu-dominio.com.br
 VOLUME_PATH=/mnt/nfs/docker-stor
 TIMEZONE=America/Sao_Paulo
 ```
+Depois salve como **.env** na mesma pasta docker dos compose.yml
 
 ### 4. Iniciar Proxy Reverso
 
