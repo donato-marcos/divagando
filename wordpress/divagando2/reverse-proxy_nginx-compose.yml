@@ -1,0 +1,45 @@
+---
+name: reverse-proxy
+
+services:
+  nginx-proxy:
+    image: nginxproxy/nginx-proxy:alpine
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - /var/run/docker.sock:/tmp/docker.sock:ro
+      - ${VOLUME_PATH}/reverse-proxy/nginx_certs:/etc/nginx/certs:ro
+      - ${VOLUME_PATH}/reverse-proxy/nginx_vhost:/etc/nginx/vhost.d
+      - ${VOLUME_PATH}/reverse-proxy/nginx_conf:/etc/nginx/conf.d
+      - ${VOLUME_PATH}/reverse-proxy/nginx_html:/usr/share/nginx/html
+    networks:
+      - proxy-frontend
+    restart: unless-stopped
+
+  letsencrypt:
+    image: nginxproxy/acme-companion
+    depends_on:
+      - nginx-proxy
+    volumes_from:
+      - nginx-proxy
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - ${VOLUME_PATH}/reverse-proxy/nginx_certs:/etc/nginx/certs:rw
+      #- ${VOLUME_PATH}/reverse-proxy/nginx_vhost:/etc/nginx/vhost.d
+      #- ${VOLUME_PATH}/reverse-proxy/nginx_conf:/etc/nginx/conf.d
+      #- ${VOLUME_PATH}/reverse-proxy/nginx_html:/usr/share/nginx/html
+      - ${VOLUME_PATH}/reverse-proxy/nginx_acme:/etc/acme.sh
+    networks:
+      - proxy-frontend
+    environment:
+      - DEFAULT_EMAIL=${EMAIL}
+    restart: unless-stopped
+
+networks:
+  proxy-frontend:
+    name: proxy-frontend
+    driver: bridge
+    attachable: true
+
+
