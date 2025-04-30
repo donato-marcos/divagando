@@ -1,4 +1,4 @@
-# WordPress com NFS e Proxy Reverso Nginx
+# WordPress com NFS e Proxy Reverso Nginx (Fedora Server 40)
 
 Este projeto implementa uma instalação do WordPress utilizando armazenamento NFS compartilhado e um proxy reverso Nginx com certificados SSL Let's Encrypt.
 
