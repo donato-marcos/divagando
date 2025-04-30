@@ -7,6 +7,6 @@ MOUNT_OPTS="rw,async,hard,intr,noatime,nodiratime,rsize=32768,wsize=32768,timeo=
 
 dnf install -y nfs-utils
 
-sudo mkdir -p "${MOUNT_POINT}"
+mkdir -p "${MOUNT_POINT}"
 echo "${NFS_SERVER}:${NFS_SHARE} ${MOUNT_POINT} nfs ${MOUNT_OPTS} 0 0" | sudo tee -a /etc/fstab
-sudo mount -a
+mount -a
